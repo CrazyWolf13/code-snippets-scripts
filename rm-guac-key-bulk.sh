@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# @name: Remove Guacamole key on all hosts
-# @description: Runs the Guacamole key removal on every SSH connection in Nexterm (run on the Nexterm host)
+# @name: Remove Guacamole key in a folder
+# @description: Runs the Guacamole key removal on all SSH connections in a Nexterm folder (run on the Nexterm host)
 set -euo pipefail
 
 DEFAULT_URL="http://127.0.0.1:6989"
@@ -14,14 +14,26 @@ command -v curl >/dev/null || apt-get install -y curl >/dev/null
 read -rp "Nexterm URL [$DEFAULT_URL]: " BASE
 BASE="${BASE:-$DEFAULT_URL}"; BASE="${BASE%/}"
 read -rsp "Nexterm API key: " KEY; echo
-read -rp "Only connections whose name contains (Enter = all): " FILTER
 
 api() { curl -sS -X "$1" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" ${3:+-d "$3"} "$BASE/api/$2"; }
 
-ENTRIES=$(api GET entries/list | jq -c --arg f "$FILTER" '[.. | objects | select(.type? == "server" and .protocol? == "ssh" and (.name | ascii_downcase | contains($f | ascii_downcase)))] | unique_by(.id)')
+TREE=$(api GET entries/list)
+FOLDERS=$(jq -c 'def f($p): .[]? | select((.entries? | type) == "array") | ($p + [.name // (.id|tostring)]) as $np | {path: ($np | join(" / ")), node: .}, (.entries | f($np)); [f([])]' <<<"$TREE")
+echo "Folders:"
+jq -r 'to_entries[] | "  \(.key + 1)) \(.value.path)"' <<<"$FOLDERS"
+read -rp "Folder number (Enter = all connections): " SEL
+
+if [ -n "$SEL" ]; then
+  SCOPE=$(jq -c --argjson i "$SEL" '[.[$i - 1].node // empty]' <<<"$FOLDERS")
+  [ "$(jq length <<<"$SCOPE")" -gt 0 ] || { echo "Invalid folder number"; exit 1; }
+else
+  SCOPE="$TREE"
+fi
+
+ENTRIES=$(jq -c '[.. | objects | select(.type? == "server" and .protocol? == "ssh")] | unique_by(.id)' <<<"$SCOPE")
 COUNT=$(jq length <<<"$ENTRIES")
-[ "$COUNT" -gt 0 ] || { echo "No matching SSH connections"; exit 0; }
-echo "$COUNT SSH connections:"
+[ "$COUNT" -gt 0 ] || { echo "No SSH connections there"; exit 0; }
+echo "$COUNT SSH connections (including subfolders):"
 jq -r '.[] | "  \(.name)"' <<<"$ENTRIES"
 read -rp "Run the key removal on all of them? [y/N] " ok
 [ "$ok" = "y" ] || { echo "Aborted"; exit 0; }
