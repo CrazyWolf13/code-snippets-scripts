@@ -438,6 +438,22 @@ $tasks = @(
     @{description="Custom Sandbox"; question="Have youset up the custom Windows Sandbox config from my code-snippets-scripts repository?"}
 )
 
+while ($true) {
+    $userInput = Read-Host "Would you like to open some helpful screenshots now? (y/n)"
+    if ($userInput -eq 'y') {
+        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/assets/screenshot_key.png"
+        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/assets/download_folder_fix.png"
+        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/assets/ChrisTitusWinUtil.png"
+        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/assets/pptx_embed_font.jpg"
+        break
+    } elseif ($userInput -eq 'n') {
+        Write-Host "Cancelled"
+        break
+    } else {
+        Write-Host "Invalid input. Please enter 'y' for yes or 'n' for no."
+    }
+}
+
 
 # Process the program tasks
 Invoke-Tasks $programs
