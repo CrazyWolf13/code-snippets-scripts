@@ -44,7 +44,7 @@ Before running the script, make sure you have the following prerequisites in pla
 
 2. Open a command prompt or PowerShell window and navigate to the repository directory.
 
-3. Run the `gfpgan_auto-installer.cmd` script by double-clicking it or executing it from the command line.
+3. Run the `gfpgan_auto-installer.bat` script by double-clicking it or executing it from the command line.
 
 4. Follow the on-screen instructions to complete the installation. You can choose whether to enable NVIDIA GPU support during the installation process.
 

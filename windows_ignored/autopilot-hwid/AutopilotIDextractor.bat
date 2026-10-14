@@ -1,7 +1,4 @@
 @echo off 
-:: @name: Autopilot HWID extractor
-:: @description: Extracts the Autopilot hardware hash to a USB drive (needs helper_autopilotidextractor.ps1 next to it)
-:: @os: Windows
 
 rem Code to allow colored text in CMD
 SETLOCAL EnableDelayedExpansion

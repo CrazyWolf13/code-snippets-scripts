@@ -1,7 +1,4 @@
 @echo off
-:: @name: Happy Birthday writer
-:: @description: Types out an ASCII-art Happy Birthday message
-:: @os: Windows
 ::Writer
 setlocal enableextensions enabledelayedexpansion
 goto type1

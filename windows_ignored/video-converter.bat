@@ -1,7 +1,4 @@
 @echo off
-:: @name: YouTube downloader
-:: @description: Downloads and converts videos with yt-dlp (interactive)
-:: @os: Windows
 setlocal enabledelayedexpansion
 echo __   __          _         _                             
 echo \ \ / /__  _   _^| ^|_ _   _^| ^|__   ___                    

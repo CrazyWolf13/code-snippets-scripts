@@ -1,7 +1,4 @@
 @echo off
-:: @name: GFPGAN installer
-:: @description: Installs GFPGAN with optional NVIDIA CUDA support (interactive)
-:: @os: Windows
 chcp 65001 >nul
 
 if not exist starter.bat (
@@ -24,7 +21,7 @@ goto continue
 (
 echo @echo off
 echo timeout /t 3 /NOBREAK >NUL
-echo start /max gfpgan_auto-installer.cmd
+echo start /max gfpgan_auto-installer.bat
 echo exit
 ) > starter.bat
 start starter.bat
@@ -89,7 +86,7 @@ SET mypath=%~dp0
 echo @echo off
 echo timeout /t 15 /NOBREAK
 echo cd "%mypath%"
-echo start /max gfpgan_auto-installer.cmd
+echo start /max gfpgan_auto-installer.bat
 echo exit
 ) > autostart_gfpgan.bat
 
@@ -154,7 +151,7 @@ echo del "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\autostart_gfpg
 echo.
 echo cd ..
 echo echo " "^>finish.txt
-echo start /max gfpgan_auto-installer.cmd
+echo start /max gfpgan_auto-installer.bat
 echo exit
 ) > install.bat
 

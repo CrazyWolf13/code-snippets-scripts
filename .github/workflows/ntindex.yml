@@ -15,9 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Folders ending in _ignored (e.g. windows_ignored/) are kept in the repo but not offered in Nexterm
       - name: Build NTINDEX
         run: |
           git ls-files -z -- '*.sh' '*.bash' '*.zsh' '*.fish' '*.ps1' '*.txt' '*.snippet' '*.cmd' '*.theme.css' \
+            ':(exclude,glob)**/*_ignored/**' \
             | sort -z \
             | while IFS= read -r -d '' f; do
                 printf '%s@%s\n' "$f" "$(sha256sum "$f" | cut -d' ' -f1)"

@@ -352,7 +352,7 @@ $logfile = 'C:\Windows\Temp\remove-caps.log';
 		]]></File>
 		<File path="C:\Windows\Setup\Scripts\unattend-01.ps1">
 $ps1Path = [Environment]::GetFolderPath('Desktop') + '\script.ps1'
-'iex (iwr https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/post-install.ps1).Content' | Out-File -FilePath $ps1Path -Encoding UTF8
+'iex (iwr https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows_ignored/post-install.ps1).Content' | Out-File -FilePath $ps1Path -Encoding UTF8
 $batPath = [Environment]::GetFolderPath('Desktop') + '\run_script.bat'
 $batContent = @"
 @echo off

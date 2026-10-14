@@ -3,7 +3,7 @@
 # @os: Windows
 #
 # Run directly (as admin):
-# iex (iwr https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/post-install.ps1).Content
+# iex (iwr https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows_ignored/post-install.ps1).Content
 
 Write-Host "**************************************************" -ForegroundColor Yellow
 Write-Host "Software Installation Setup" -ForegroundColor Yellow
@@ -441,10 +441,10 @@ $tasks = @(
 while ($true) {
     $userInput = Read-Host "Would you like to open some helpful screenshots now? (y/n)"
     if ($userInput -eq 'y') {
-        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/assets/screenshot_key.png"
-        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/assets/download_folder_fix.png"
-        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/assets/ChrisTitusWinUtil.png"
-        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows/assets/pptx_embed_font.jpg"
+        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows_ignored/assets/screenshot_key.png"
+        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows_ignored/assets/download_folder_fix.png"
+        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows_ignored/assets/ChrisTitusWinUtil.png"
+        Start-Process "https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/windows_ignored/assets/pptx_embed_font.jpg"
         break
     } elseif ($userInput -eq 'n') {
         Write-Host "Cancelled"
