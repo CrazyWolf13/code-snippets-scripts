@@ -1,0 +1,3 @@
+[submodule "windows/better-sandbox/Windows-Sandbox-Tools"]
+	path = windows/better-sandbox/Windows-Sandbox-Tools
+	url = https://github.com/ThioJoe/Windows-Sandbox-Tools.git
