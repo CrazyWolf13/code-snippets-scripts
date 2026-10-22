@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @name: Remove Guacamole key in a folder
+# @name: Nexterm: Remove Guacamole key in a folder
 # @description: Runs the Guacamole key removal on all SSH connections in a Nexterm folder (run on the Nexterm host)
 set -euo pipefail
 
