@@ -1,10 +1,10 @@
 #!/bin/bash
-# @name: Post-install setup
+# @name: Setup: Post-install
 # @description: Base tools, optional QoL tools and bashrc injection
 # @os: Ubuntu
 #
 # Run directly:
-# bash <(curl -fsSL https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/linux/post-install.sh)
+# bash <(curl -fsSL https://raw.githubusercontent.com/CrazyWolf13/code-snippets-scripts/main/setup/post-install.sh)
 
 # Fallbacks for running outside Nexterm, where the @NEXTERM: lines are not rewritten
 @NEXTERM:STEP() { echo "==> $1"; }

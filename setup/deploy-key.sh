@@ -1,4 +1,4 @@
-# @name: Deploy-Nexterm-and-Emergency-Key
+# @name: Setup: Deploy Nexterm and emergency keys
 # @description: Deploys an IP-Restricted Pubkey of Nexterm and Emergency Key
 # @os: Debian, Ubuntu
 

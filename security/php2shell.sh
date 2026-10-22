@@ -1,5 +1,5 @@
 #!/bin/sh
-# @name: PHP2Shell check and fix
+# @name: Security: PHP2Shell check and fix
 # @description: Checks installed PHP for CVE-2026-109618/109619, updates PHP and restarts php-fpm/apache2 if affected, then checks again
 # Non-interactive, so it also works with nexterm/run-on-folder.sh. Exit code 1 = still affected after the update.
 

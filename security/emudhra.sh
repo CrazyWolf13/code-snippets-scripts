@@ -1,5 +1,5 @@
 #!/bin/sh
-# @name: eMudhra trust check and fix
+# @name: Security: eMudhra trust check and fix
 # @description: Checks ca-certificates and CA bundles (system, certifi, pip, Node) for the compromised eMudhra roots, updates if affected, then checks again
 # Non-interactive, so it also works with nexterm/run-on-folder.sh. Exit code 1 = still affected after the update.
 

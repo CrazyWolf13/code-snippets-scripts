@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @name: Swap identity on connections
+# @name: Nexterm: Swap identity on connections
 # @description: Replaces one identity with another on all Nexterm connections (run on the Nexterm host)
 set -euo pipefail
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @name: Run snippet or script on a folder
+# @name: Nexterm: Run snippet or script on a folder
 # @description: Runs a Nexterm snippet or script on every SSH connection in a folder, one by one (run on the Nexterm host)
 set -euo pipefail
 
