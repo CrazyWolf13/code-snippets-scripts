@@ -65,26 +65,54 @@ fi
 
 jq -r '.[] | "  \(.name)"' <<<"$ENTRIES"
 if grep -qE '(^|[;&|[:space:]])read[[:space:]]' <<<"$BODY"; then
-  @NEXTERM:WARN "$NAME contains a read prompt. Commands run without a terminal, so prompts get no answer."
+  @NEXTERM:WARN "$NAME contains a read prompt. It runs in the background without a terminal, so prompts get no answer."
 fi
 @NEXTERM:CONFIRM "Run $NAME on these $COUNT SSH connections (including subfolders), one by one?"
 
-# The body is sent base64-encoded, so quotes and multiple lines survive; it runs with bash, or sh if bash is missing
-CMD="printf '%s' '$(printf '%s' "$BODY" | base64 -w0)' | base64 -d | \"\$(command -v bash || command -v sh)\""
-PAYLOAD=$(jq -nc --arg c "$CMD" '{command: $c}')
+# Nexterm's exec API gives up after 30 seconds, so the body starts in the background on the host and gets polled.
+# It's sent base64-encoded, so quotes and multiple lines survive; it runs with bash, or sh if bash is missing.
+START="D=\$(mktemp -d) || exit 1; printf '%s' '$(printf '%s' "$BODY" | base64 -w0)' | base64 -d > \"\$D/run\" || exit 1; nohup sh -c '\"\$(command -v bash || command -v sh)\" \"\$1/run\" > \"\$1/out\" 2>&1; echo \$? > \"\$1/rc\"' _ \"\$D\" < /dev/null > /dev/null 2>&1 & echo \"\$D\""
+POLL_EVERY=5
+MAX_WAIT=3600
+
+# exec ID COMMAND: runs COMMAND on connection ID, prints stdout and returns its exit code (99 = API error)
+exec_on() {
+  local res
+  res=$(api POST "connections/$1/exec" "$(jq -nc --arg c "$2" '{command: $c}')" || true)
+  if jq -e '.exitCode? != null' <<<"$res" >/dev/null 2>&1; then
+    jq -r '(.stdout // "") + (.stderr // "")' <<<"$res"
+    return "$(jq -r .exitCode <<<"$res")"
+  fi
+  echo "ERROR: $(jq -r '.message // .error // tostring' <<<"$res" 2>/dev/null || echo "no valid response")"
+  return 99
+}
 
 @NEXTERM:STEP "Running $NAME"
 OK=0; FAILED=0
 while read -r e; do
   HOST=$(jq -r .name <<<"$e")
   echo "===== $HOST"
-  RES=$(api POST "connections/$(jq -r .id <<<"$e")/exec" "$PAYLOAD" || true)
-  if jq -e '.exitCode? != null' <<<"$RES" >/dev/null 2>&1; then
-    jq -r '(.stdout // "") + (.stderr // "") | sub("\n+$"; "")' <<<"$RES"
-    RC=$(jq -r .exitCode <<<"$RES")
-  else
-    echo "ERROR: $(jq -r '.message // .error // tostring' <<<"$RES" 2>/dev/null || echo "no valid response")"
+  ID=$(jq -r .id <<<"$e")
+  RC=0; DIR=$(exec_on "$ID" "$START") || RC=$?
+  DIR=$(tail -n1 <<<"$DIR")
+  if [ "$RC" -ne 0 ] || [[ "$DIR" != /* ]]; then
+    echo "$DIR"
     RC=1
+  else
+    WAITED=0; ERRORS=0
+    while :; do
+      sleep "$POLL_EVERY"; WAITED=$((WAITED + POLL_EVERY))
+      RC=0; OUT=$(exec_on "$ID" "[ -f '$DIR/rc' ] || exit 98; cat '$DIR/out'; R=\$(cat '$DIR/rc'); rm -rf '$DIR'; exit \$R") || RC=$?
+      case $RC in
+        98) ERRORS=0 ;;
+        99) ERRORS=$((ERRORS + 1)); if [ "$ERRORS" -ge 3 ]; then echo "$OUT"; RC=1; break; fi ;;
+        *) [ -z "$OUT" ] || echo "$OUT"; break ;;
+      esac
+      if [ "$WAITED" -ge "$MAX_WAIT" ]; then
+        echo "still running after ${MAX_WAIT}s, not waiting any longer (output in $DIR/out on the host)"
+        RC=1; break
+      fi
+    done
   fi
   if [ "$RC" -eq 0 ]; then
     OK=$((OK + 1))
