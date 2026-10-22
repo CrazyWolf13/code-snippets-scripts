@@ -7,8 +7,19 @@ command -v jq >/dev/null || apt-get install -y jq >/dev/null
 command -v curl >/dev/null || apt-get install -y curl >/dev/null
 
 @NEXTERM:INPUT BASE "Nexterm URL" "http://127.0.0.1:6989"
-@NEXTERM:INPUT KEY "Nexterm API key"
 BASE="${BASE%/}"
+# Ask again until the key works (Nexterm's dialog can submit an empty value when Enter is pressed on the previous one)
+while :; do
+  @NEXTERM:INPUT KEY "Nexterm API key"
+  [ -n "$KEY" ] || continue
+  CODE=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/api/entries/list" || true)
+  [ "$CODE" = 200 ] && break
+  if [ "$CODE" = 000 ]; then
+    @NEXTERM:WARN "Can't reach Nexterm at $BASE"
+    exit 1
+  fi
+  @NEXTERM:WARN "API key rejected (HTTP $CODE), try again"
+done
 
 api() { curl -fsS -X "$1" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" ${3:+-d "$3"} "$BASE/api/$2"; }
 
