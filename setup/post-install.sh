@@ -42,10 +42,17 @@ has_gui() {
 }
 
 @NEXTERM:SELECT QOL "Install quality of life tools (bat, eza, fzf, cmatrix, duf, grc, oh-my-posh)?" "Yes" "No"
-@NEXTERM:SELECT BASHRC "Inject custom settings into .bashrc?" "Yes" "No"
-if [ "$BASHRC" = "Yes" ]; then
-    @NEXTERM:INPUT TOKEN "GitHub personal access token"
+DOT_BASHRC="https://raw.githubusercontent.com/CrazyWolf13/chezmoi/refs/heads/main/dot_bashrc"
+# Checked up front, so a rerun doesn't ask for the token again
+if grep -qF "$DOT_BASHRC" ~/.bashrc 2>/dev/null; then
+    BASHRC="already present"
+else
+    @NEXTERM:SELECT BASHRC "Inject custom settings into .bashrc?" "Yes" "No"
 fi
+TOKEN=""
+while [ "$BASHRC" = "Yes" ] && [ -z "$TOKEN" ]; do
+    @NEXTERM:INPUT TOKEN "GitHub personal access token"
+done
 
 @NEXTERM:STEP "Updating the system"
 sudo $APT update
@@ -87,15 +94,10 @@ fi
 
 if [ "$BASHRC" = "Yes" ]; then
     @NEXTERM:STEP "Injecting custom settings into .bashrc"
-    if grep -q 'CrazyWolf13/chezmoi' ~/.bashrc 2>/dev/null; then
-        @NEXTERM:INFO ".bashrc already has the custom settings, skipped"
-        BASHRC="already present"
-    else
-        {
-            echo "ACCESS_TOKEN=$TOKEN"
-            echo "bash <(curl -H \"Authorization: token $TOKEN\" -sSL https://raw.githubusercontent.com/CrazyWolf13/chezmoi/refs/heads/main/dot_bashrc)"
-        } >> ~/.bashrc
-    fi
+    {
+        echo "ACCESS_TOKEN=$TOKEN"
+        echo "bash <(curl -H \"Authorization: token $TOKEN\" -sSL $DOT_BASHRC)"
+    } >> ~/.bashrc
 fi
 
 IP=$(hostname -I | awk '{print $1}')
