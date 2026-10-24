@@ -54,13 +54,7 @@ sudo $APT upgrade
 @NEXTERM:STEP "Installing base and server tools"
 sudo $APT install nala btop screen git fdisk curl wget jq unzip rsync tree ncdu lsof dnsutils mtr-tiny
 
-# fastfetch is in the Ubuntu repos from 24.10 on; older releases need the PPA (Ubuntu only, PPAs don't work on Debian)
-if [ -z "$(available fastfetch)" ] && [ "$ID" = "ubuntu" ]; then
-    sudo $APT install software-properties-common
-    # Not fatal if Launchpad is unreachable, fastfetch is just skipped then
-    sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch || true
-    sudo $APT update
-fi
+# fastfetch is in the Ubuntu repos from 24.10 on, older releases skip it
 if [ -n "$(available fastfetch)" ]; then
     sudo $APT install fastfetch
 else
