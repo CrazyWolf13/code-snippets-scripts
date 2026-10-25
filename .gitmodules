@@ -1,3 +1,0 @@
-[submodule "windows_ignored/better-sandbox/Windows-Sandbox-Tools"]
-	path = windows_ignored/better-sandbox/Windows-Sandbox-Tools
-	url = https://github.com/ThioJoe/Windows-Sandbox-Tools.git
