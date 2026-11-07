@@ -31,23 +31,30 @@ $favoriteColor = Read-Host "What is your favorite color? (blue, green, red)"
 Write-Host ""
 
 $gamingApps = @(
-    "Mojang.MinecraftLauncher", "Moonsworth.LunarClient", 
-    "EpicGames.EpicGamesLauncher", "GOG.Galaxy", "Valve.Steam", 
-    "Modrinth.ModrinthApp", "Guru3D.Afterburner", 
-    "RazerInc.RazerInstaller", "Discord.Discord"
+    "Mojang.MinecraftLauncher", "Moonsworth.LunarClient",
+    "EpicGames.EpicGamesLauncher", "GOG.Galaxy", "Valve.Steam",
+    "Modrinth.ModrinthApp", "Guru3D.Afterburner",
+    "RazerInc.RazerInstaller", "Discord.Discord",
+    "HypixelStudios.Hytale", "TeamSpeakSystems.TeamSpeakClient.Beta.6"
 )
 
 $creativeApps = @(
-    "JGraph.Draw", "OBSProject.OBSStudio", "KDE.Kdenlive", "GIMP.GIMP", 
-    "Rainmeter.Rainmeter", "Inkscape.Inkscape"
+    "JGraph.Draw", "OBSProject.OBSStudio", "KDE.Kdenlive", "GIMP.GIMP",
+    "Rainmeter.Rainmeter", "Inkscape.Inkscape",
+    "Canva.Affinity", "FreeCAD.FreeCAD"
 )
 
 $DevApps = @(
-    "OpenJS.NodeJS", "Git.Git", "Python.Python.3.13", 
-    "Microsoft.DotNet.DesktopRuntime.7", "yt-dlp.yt-dlp", 
-    "gnu.wget2", "curl.curl","streamlink.streamlink", 
-    "Microsoft.Powershell", "Famatech.AdvancedIPScanner", 
-    "Obsidian.Obsidian", "dorssel.usbipd-win"
+    "OpenJS.NodeJS", "Git.Git", "Python.Python.3.14",
+    "Microsoft.DotNet.DesktopRuntime.7", "yt-dlp.yt-dlp",
+    "gnu.wget2", "curl.curl","streamlink.streamlink",
+    "Microsoft.Powershell", "Famatech.AdvancedIPScanner",
+    "Obsidian.Obsidian", "dorssel.usbipd-win",
+    "Google.AndroidStudio", "Anthropic.Claude", "Anthropic.ClaudeCode",
+    "Docker.DockerDesktop", "Fastfetch-cli.Fastfetch", "Gyan.FFmpeg",
+    "GnuPG.GnuPG", "GoLang.Go", "GitHub.cli", "Debian.Debian",
+    "Nvidia.Nsight.Compute", "CrystalDewWorld.CrystalDiskInfo",
+    "CrystalDewWorld.CrystalDiskMark", "twpayne.chezmoi", "Canonical.Ubuntu"
 )
 
 $essentialApps = @(
@@ -56,21 +63,25 @@ $essentialApps = @(
 
 $defaultApps = @(
     "9NKSQGP7F2NH", "9N9WCLWDQS5J", "9PF4KZ2VN4W9", "9MT60QV066RP",
-    "7zip.7zip", "AnyDeskSoftwareGmbH.AnyDesk", 
-    "DeepL.DeepL", "VideoLAN.VLC", "Microsoft.PowerToys", 
-    "Oracle.JDK.23", "Nilesoft.Shell", "Bitwarden.Bitwarden", 
-    "OpenWhisperSystems.signal", "valinet.ExplorerPatcher", 
-    "AdrienAllard.FileConverter", "JanDeDobbeleer.OhMyPosh", 
-    "Insomnia.Insomnia", "Element.Element", "Flameshot.Flameshot", 
-    "localsend.localsend", "SomePythonThings.WingetUIStore", "ProtonTechnologies.ProtonVPN"
+    "7zip.7zip", "AnyDeskSoftwareGmbH.AnyDesk",
+    "DeepL.DeepL", "VideoLAN.VLC", "Microsoft.PowerToys",
+    "Oracle.JDK.25", "Nilesoft.Shell", "Bitwarden.Bitwarden",
+    "OpenWhisperSystems.signal", "valinet.ExplorerPatcher",
+    "AdrienAllard.FileConverter", "JanDeDobbeleer.OhMyPosh",
+    "Insomnia.Insomnia", "Element.Element", "Flameshot.Flameshot",
+    "localsend.localsend", "XPFFTQ032PTPHF", "ProtonTechnologies.ProtonVPN",
+    "winaero.tweaker", "Proton.ProtonDrive"
 )
 
 $otherApps = @(
     "GnuCash.GnuCash", "Garmin.Express",
-    "MusicBrainz.Picard", "Balena.Etcher", "VMware.WorkstationPro", 
+    "MusicBrainz.Picard", "Balena.Etcher", "VMware.WorkstationPro",
     "WiresharkFoundation.Wireshark", "Rufus.Rufus", "Brave.Brave",
-    "RaspberryPiFoundation.RaspberryPiImager", "Samsung.DeX", 
-    "9nh4f7j77cpd","Nvidia.CUDA"
+    "RaspberryPiFoundation.RaspberryPiImager", "Samsung.DeX",
+    "9nh4f7j77cpd","Nvidia.CUDA",
+    "Corsair.iCUE.5", "Google.Chrome", "Google.ChromeRemoteDesktopHost",
+    "Jellyfin.JellyfinMediaPlayer", "Logitech.GHUB", "Omnissa.HorizonClient",
+    "Ventoy.Ventoy", "Dell.DisplayAndPeripheralManager", "Cisco.Webex"
 )
 
 $pythonPackages = @(
@@ -349,14 +360,11 @@ function Invoke-Tasks($tasks) {
 # Array of program tasks
 $programs = @(
     @{description="Farming Simulator 19"; url="https://eshop.giants-software.com/downloads.php"; question="Have you installed Farming Simulator 19 from CD or Web?"}
-    @{description="Corel VideoStudio Pro 2019"; url="Exe in Zip files added to installation Guide on Bookstack"; question="Did you follow the guide to install Corel VideoStudio Pro 2019?"}
     @{description="Office"; url="https://setup.office.com"; question="Have you set up Office via setup.office.com?"}
-    @{description="Corsair iCUE"; url="https://www.corsair.com/de/de/s/downloads"; question="Did you download and install Corsair iCUE?"}
     @{description="Roccat Mouse"; url="https://support.roccat.com/s/downloads"; question="Did you download the driver for Roccat Mouse?"}
     @{description="iTunes (NOT Store Version!)"; url="https://support.apple.com/de-ch/HT210384"; question="Have you installed iTunes from the provided link?"}
     @{description="Sideloadly"; url="https://sideloadly.io/"; question="Did you install Sideloadly?"}
     @{description="GFPGAN"; url="https://github.com/CrazyWolf13/auto_gfpgan-installer"; question="Have you set up GFPGAN for Ahnenfotos?"}
-    @{description="WinAero Tweaker"; url="https://winaerotweaker.com/"; question="Did you install WinAero Tweaker?"}
     @{description="Nvidia CUDA for Ahnenfotos"; url="https://developer.nvidia.com/cuda-downloads"; question="Is Nvidia CUDA installed for Ahnenfotos?"}
     @{description="ChrisTitusTweaker"; url="irm https://christitus.com/win | iex"; question="Did you run the ChrisTitusTweaker script?"}
     @{description="WSL2"; url="wsl --install -d ubuntu"; question="Is WSL2 installed with Ubuntu?"}
@@ -368,6 +376,8 @@ $programs = @(
     @{description="EpicGames: Fortnite"; url=""; question="Is Fortnite installed from EpicGames?"}
     @{description="Vikunja Desktop"; url=""; question="Is Vikunja Desktop unstable (msi) from https://dl.vikunja.io/desktop/unstable installed?"}
     @{description="Plexo"; url="https://github.com/anmolkapil/plexo"; question="Have you installed Plexo (parallel-connection download manager) from the GitHub releases?"}
+    @{description="Macrium Reflect Free Edition v7.3 (last free version - do NOT upgrade past v7.3)"; url=""; question="Is Macrium Reflect Free v7.3 installed?"}
+    @{description="Tizen Studio"; url=""; question="Is Tizen Studio installed (if still needed)?"}
 )
 
 # Array of configuration tasks
