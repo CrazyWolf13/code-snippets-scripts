@@ -367,6 +367,7 @@ $programs = @(
     @{description="EpicGames: Farming Simulator 22"; url=""; question="Is Farming Simulator 22 installed from EpicGames?"}
     @{description="EpicGames: Fortnite"; url=""; question="Is Fortnite installed from EpicGames?"}
     @{description="Vikunja Desktop"; url=""; question="Is Vikunja Desktop unstable (msi) from https://dl.vikunja.io/desktop/unstable installed?"}
+    @{description="Plexo"; url="https://github.com/anmolkapil/plexo"; question="Have you installed Plexo (parallel-connection download manager) from the GitHub releases?"}
 )
 
 # Array of configuration tasks
