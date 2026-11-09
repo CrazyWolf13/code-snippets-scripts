@@ -11,6 +11,12 @@ fi
 
 SERVICE=${SERVICE:-/etc/systemd/system/beszel-agent.service}
 
+# SMART monitoring source: https://beszel.dev/guide/smart-data#disk-group
+# Intel GPU monitoring source: https://beszel.dev/guide/gpu#intel
+#
+# CAP_SYS_RAWIO  -> SMART disk access
+# CAP_SYS_ADMIN  -> SMART/NVMe access
+# CAP_PERFMON    -> Intel GPU metrics
 KEYS=(AmbientCapabilities CapabilityBoundingSet NoNewPrivileges SystemCallArchitectures)
 declare -A settings=(
     [AmbientCapabilities]="CAP_SYS_RAWIO CAP_SYS_ADMIN CAP_PERFMON"
