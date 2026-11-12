@@ -85,7 +85,7 @@ fi
 if [ "$QOL" = "Yes" ]; then
     @NEXTERM:STEP "Installing quality of life tools"
     # eza is missing on 22.04, so only install what the release offers
-    sudo $APT install $(available bat eza fzf cmatrix duf grc)
+    sudo $APT install $(available bat eza fzf cmatrix duf grc trash-cli)
     # pipefail, otherwise a failed download pipes nothing into bash and counts as success
     if ! (set -o pipefail; curl -fsSL https://ohmyposh.dev/install.sh | bash); then
         @NEXTERM:WARN "oh-my-posh install failed"
