@@ -1,5 +1,5 @@
 # @name: Update: Debian/Ubuntu
-# @description: Repair, update and clean an apt-based container
+# @description: Repair, update and clean an apt-based system, with or without sudo, and report if a reboot is needed
 # @os: Debian, Ubuntu
 
-apt update && dpkg --configure -a && apt install -f && apt dist-upgrade && apt autoremove && apt autoclean; echo "Update finished: $(date)"
+(SUDO=$([ "$(id -u)" -eq 0 ] || echo sudo); $SUDO apt update && $SUDO dpkg --configure -a && $SUDO apt install -f && $SUDO apt dist-upgrade && $SUDO apt autoremove && $SUDO apt autoclean; N=$(find /boot -maxdepth 1 -name "vmlinuz-*" 2>/dev/null | sed "s|/boot/vmlinuz-||" | sort -V | tail -n 1); { [ -f /var/run/reboot-required ] || { [ -n "$N" ] && [ "$N" != "$(uname -r)" ]; }; } && echo ">>> REBOOT REQUIRED (running $(uname -r)${N:+, newest $N}) <<<"; echo "Update finished: $(date)")
