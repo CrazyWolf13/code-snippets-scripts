@@ -1,5 +1,5 @@
 # @name: Update: Proxmox VE
-# @description: Update a Proxmox Instance and run PveMods
+# @description: Update a Proxmox instance (PVE-mods updates through its apt repo)
 # @os: Debian
 
-apt update && apt install -y screen sudo curl lm-sensors && screen -L -Logfile /root/pve-update.log -S pve-update bash -c 'dpkg --configure -a && apt install -f && apt dist-upgrade && apt autoremove && apt autoclean && { curl -fsSL https://raw.githubusercontent.com/Meliox/PVE-mods/refs/heads/main/install.sh | bash || echo ">>> WARNING: PVE-mods install failed <<<"; }; N=$(find /boot -maxdepth 1 -name "vmlinuz-*" | sed "s|/boot/vmlinuz-||" | sort -V | tail -n 1); [ "$N" = "$(uname -r)" ] || echo ">>> REBOOT REQUIRED (running $(uname -r), newest $N) <<<"; echo "Update finished: $(date)"; read -rp "Press Enter to close"'
+apt update && apt install -y screen sudo curl lm-sensors && screen -L -Logfile /root/pve-update.log -S pve-update bash -c 'dpkg --configure -a && apt install -f && apt dist-upgrade && apt autoremove && apt autoclean; N=$(find /boot -maxdepth 1 -name "vmlinuz-*" | sed "s|/boot/vmlinuz-||" | sort -V | tail -n 1); [ "$N" = "$(uname -r)" ] || echo ">>> REBOOT REQUIRED (running $(uname -r), newest $N) <<<"; echo "Update finished: $(date)"; read -rp "Press Enter to close"'
